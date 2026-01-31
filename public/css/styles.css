@@ -160,6 +160,62 @@ footer {
   color: black;
 }
 
+/* Inventory Cards Details */
+
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  justify-content: center;
+  text-align: center;
+  row-gap: 1.5rem;
+  column-gap: 2rem;
+  list-style-type: none;
+  padding: 0;
+}
+
+#inv-display h2 {
+  /* padding: 0.8rem; */
+  font-size: 1.5rem;
+}
+
+#inv-display li {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 350px;
+  justify-items: center;
+  /* border: 2px solid gray; */
+  border-radius: 2rem;
+  box-shadow: 1px 1px 5px #888888;
+}
+
+#inv-display img,
+#car-image img {
+  width: 100%;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 2rem 2rem 0 0;
+  /* margin: 1.5rem 0; */
+}
+
+#inv-display img {
+  height: 11rem;
+}
+
+#inv-display div {
+  padding: 1rem 0;
+  width: 100%;
+}
+
+#inv-display hr {
+  height: 2px;
+  background-color: #00a0e3;
+}
+
+#inv-display span {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 /* Bigger Screen 600px */
 
 @media (min-width: 600px) {
