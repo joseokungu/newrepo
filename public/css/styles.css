@@ -216,6 +216,29 @@ footer {
   font-weight: bold;
 }
 
+/* Details page */
+
+#details-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+#car-details > :nth-child(odd):not(h2) {
+  padding: 0 0.5rem;
+}
+
+#car-details > :nth-child(even) {
+  background-color: #cce9f6;
+  padding: 1rem 0.5rem;
+}
+
+#car-details .price {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
 /* Bigger Screen 600px */
 
 @media (min-width: 600px) {
