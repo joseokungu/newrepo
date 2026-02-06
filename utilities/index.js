@@ -26,15 +26,6 @@ Util.getNav = async function (req, res, next) {
   return list
 }
 
-/* ****************************************
- * Middleware For Handling Errors
- * Wrap other function in this for 
- * General Error Handling
- **************************************** */
-Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
-
-module.exports = Util
-
 /* **************************************
 * Build the classification view HTML
 * ************************************ */
@@ -67,3 +58,65 @@ Util.buildClassificationGrid = async function(data){
   }
   return grid
 }
+
+/* **************************************
+* Build the details view HTML
+* ************************************ */
+Util.buildDetailsDisplay = async function (data) {
+
+  const vehicle = data[0]
+  
+  let flex
+
+  flex = '<div id="details-flex">'
+
+  // flex += '<p><span class="price">' + JSON.stringify(vehicle, null, 2)    + '</span></p>'
+
+  // Image part
+    
+  flex += '<div id="car-image">'
+    
+  flex += '<img src="' + vehicle.inv_image
+    + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model
+    + ' on CSE Motors" />'
+    
+  flex += '</div>'
+    
+  // Details part
+  flex += '<div id="car-details">'
+
+  flex += '<h2>' + vehicle.inv_make + ' ' + vehicle.inv_model
+    
+    + ' Details </h2>'
+    
+  flex += '<p class="price">Price: <span>$'
+    
+    + new Intl.NumberFormat('en-US').format(vehicle.inv_price)
+      
+    + '</span></p>'
+
+  flex += '<p><b>Description: </b><span>' + vehicle.inv_description
+    + '</span></p>'
+
+  flex += '<p><b>Color: </b><span>' + vehicle.inv_color
+    + '</span></p>'
+
+  flex += '<p><b>Miles: </b><span>' + new Intl.NumberFormat('en-US').format(vehicle.inv_miles)
+    + '</span></p>'
+    
+  flex += '</div>'
+
+  flex += '</div>'
+
+  return flex
+}
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
+
+module.exports = Util
