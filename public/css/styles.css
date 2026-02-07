@@ -319,6 +319,47 @@ input:required:valid {
   border: 2px solid green;
 }
 
+/* Inventory Table */
+
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td{
+  padding: 0.5rem;
+  border-bottom: 1px solid #070303;
+}
+
+#inventoryDisplay a {
+  padding: 8px;
+}
+
+#favorites-table {
+  width: 100%;
+  text-align: center;
+font-size: 1.2rem;
+color: black;
+border: 1px solid black;
+}
+
+#favorites-table td {
+  padding: 5px;
+color: black;
+}
+
+#favorites-table a {
+  text-decoration: none;
+color: black;
+}
+
+#favorites-table thead {
+  background-color: #c5d9e2;
+}
+
+
 /* Bigger Screen 600px */
 
 @media (min-width: 600px) {
