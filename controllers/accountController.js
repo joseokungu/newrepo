@@ -23,5 +23,22 @@ accountCont.buildLogin = async function (req, res, next) {
   })
 }
 
+/* ****************************************
+*  Deliver registration view
+* *************************************** */
+accountCont.buildRegister = async function (req, res, next) {
+  let nav = await utilities.getNav()
+    const accountData = res.locals.accountData
+
+  if (accountData) {
+      return res.redirect("/account/")
+  }
+  res.render("account/register", {
+    title: "Registration",
+    nav,
+    errors: null,
+  })
+}
+
 
 module.exports = accountCont
