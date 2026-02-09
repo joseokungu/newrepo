@@ -1,0 +1,42 @@
+<!-- Content Heading -->
+
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+
+<!-- Flash Message Section -->
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error=> { %>
+            <li>
+                <%= error.msg %>
+            </li>
+            <% }) %>
+    </ul>
+<% } %>
+
+<!-- Content -->
+<section class="account-container">
+    <ul class="management-container">
+        <a class="management-link" href="/inv/add-classification">Add New Classification</a>
+        <a class="management-link" href="/inv/add-inventory">Add New Inventory</a>
+    </ul>
+
+    <h2>Manage Inventory</h2>
+    
+    <p>Select a classification from the list</p>
+    
+    <%- classificationSelect %>
+    
+        <table id="inventoryDisplay"></table>
+    
+        <noscript>JavaScript must be enabled to use this page.</noscript>
+
+</section>
+
+
+<script src="../../js/inventory.js"></script>
