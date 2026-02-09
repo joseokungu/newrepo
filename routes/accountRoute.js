@@ -10,6 +10,11 @@ const utilities = require("../utilities");
 const regValidate = require('../utilities/account-validation')
 
 /* ***********************
+ * Deliver management view
+ *************************/
+router.get("/", utilities.handleErrors(controller.buildManagement));
+
+/* ***********************
  * Deliver login view
  *************************/
 router.get("/login", utilities.handleErrors(controller.buildLogin));
