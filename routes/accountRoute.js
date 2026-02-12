@@ -42,4 +42,11 @@ router.post(
   }
 )
 
+
+router.get("/logout", (req, res) => {
+    res.clearCookie("jwt");
+    req.flash("notice", "You have been logged out.");    
+    return res.redirect("/");
+});
+
 module.exports = router;
