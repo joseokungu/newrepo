@@ -12,7 +12,7 @@ const regValidate = require('../utilities/account-validation')
 /* ***********************
  * Deliver management view
  *************************/
-router.get("/", utilities.handleErrors(controller.buildManagement));
+router.get("/", utilities.checkLogin, utilities.handleErrors(controller.buildManagement));
 
 /* ***********************
  * Deliver login view
@@ -34,13 +34,19 @@ router.post(
     utilities.handleErrors(controller.registerAccount)
 )
 
-// Process the login attempt
+// // Process the login attempt
+// router.post(
+//   "/login",
+//   (req, res) => {
+//     res.status(200).send('login process')
+//   }
+// )
+
 router.post(
-  "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
+    "/login",
+    utilities.handleErrors(controller.accountLogin)
 )
+
 
 
 router.get("/logout", (req, res) => {
