@@ -1,0 +1,46 @@
+<!-- Content Heading -->
+
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+
+<!-- Flash Message Section -->
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error=> { %>
+            <li>
+                <%= error.msg %>
+            </li>
+            <% }) %>
+    </ul>
+<% } %>
+
+<!-- Content -->
+<div class="account-container">
+    <form class="account-form" id="deleteForm" action="/inv/delete-confirm" method="post">
+
+        <label for="inv_make">Make</label>
+        <input type="text" name="inv_make" id="inv_make" required pattern="^[A-Za-z][A-Za-z0-9\- ]{2,20}$" value="<%= locals.inv_make %>" placeholder="Min of 3 Characters" readonly>
+
+        <label for="inv_model">Model</label>
+        <input type="text" name="inv_model" id="inv_model"  pattern="^[A-Za-z][A-Za-z0-9\- ]{2,30}$" value="<%= locals.inv_model %>" readonly>
+
+        <label for="inv_year">Year</label>
+        <input type="number" name="inv_year" id="inv_year" required min="1900" max="2099" step="1" placeholder="4-digit year" value="<%= locals.inv_year %>" readonly>
+
+        <label for="inv_price">Price</label>
+        <input type="number" name="inv_price" id="inv_price" inputmode="decimal" required step="0.01" min="0" placeholder="Decimal or integer" value="<%= locals.inv_price %>" readonly>
+
+        <p>Confirm Deletion - <b>The delete is permanent.</b></p>
+
+        <button type="submit">Delete Vehicle</button>
+        <input type="hidden" name="inv_id" 
+        <% if(locals.inv_id) { %> value="<%= locals.inv_id %>"
+        <% } %>>
+        <a class="cancel-button" href="/inv/">Cancel</a>
+    </form>
+</div>
