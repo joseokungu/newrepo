@@ -178,4 +178,65 @@ Util.checkLogin = (req, res, next) => {
   }
 }
 
+/* ****************************************
+ *  Check if Manager or Admin
+ * ************************************ */
+Util.checkEmployeeOrAdmin = (req, res, next) => {
+
+  try {
+    const payload = res.locals.accountData
+
+    // console.log(payload)
+
+    if (payload.account_type === "Employee" || payload.account_type === "Admin") {
+
+      res.locals.accountData = payload
+
+      return next()
+    }
+
+    // If the logged user is not an admin or employee
+    req.flash("notice", "You do not have permission to access this section")
+    return res.redirect("account/login")
+
+  } catch (err) {
+
+    req.flash("notice", "Invalid session. Please log in again.")
+
+    return res.redirect("account/login")
+
+  }
+}
+
+/* ****************************************
+ *  Check Client
+ * ************************************ */
+Util.checkClient = (req, res, next) => {
+
+  try {
+    const payload = res.locals.accountData
+
+    // console.log(payload)
+
+    if (payload.account_type === "Client") {
+
+      res.locals.accountData = payload
+
+      return next()
+    }
+
+    // If the logged user tries to enter and they are and employee or admin
+    req.flash("notice", "Not permitted access. You should log in with your client account.")
+    return res.redirect("/account/")
+
+  } catch (err) {
+
+    req.flash("notice", "Invalid session. Please log in again.")
+
+    return res.redirect("/account/login")
+
+  }
+}
+
+
 module.exports = Util
