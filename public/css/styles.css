@@ -109,6 +109,8 @@ body h1 {
   width: 60%;
 }
 
+/* Content Sections */
+
 .content {
   display: flex;
   flex-direction: column-reverse;
