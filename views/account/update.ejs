@@ -1,0 +1,63 @@
+<!-- Content Heading -->
+
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+
+<!-- Flash Message Section -->
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error=> { %>
+            <li>
+                <%= error.msg %>
+            </li>
+        <% }) %>
+    </ul>
+<% } %>
+
+<!-- Content -->
+
+
+<div class="account-container">
+    <h2>Update Account Information</h2>
+    <form class="account-form" action="/account/update" method="POST">
+
+        <label for="accountFirstname">First Name</label>
+        <input type="text" name="account_firstname" id="accountFirstname" required value="<%= locals.account_firstname %>">
+
+        <label for="accountLastname">Last Name</label>
+        <input type="text" name="account_lastname" id="accountLastname" required value="<%= locals.account_lastname %>">
+
+        <label for="accountEmail">Email</label>
+        <input type="email" name="account_email" id="accountEmail" required value="<%= locals.account_email %>">
+
+        <input type="hidden" name="account_id" value="<%= locals.account_id %>">
+
+        <button type="submit">Update Account</button>
+        <a class="cancel-button" href="/account/">Cancel</a>
+    </form>
+</div>
+
+
+
+<div class="account-container">
+    <h2>Change Password</h2>
+    <form class="account-form" action="/account/update-password" method="POST">
+
+        <label for="account_password">New Password</label>
+
+        <span>Password must be at least 12 characters long, contain 1 uppercase letter, 1 number, and 1 special character.</span>
+        <input type="password" id="account_password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$">
+
+
+
+        <input type="hidden" name="account_id" value="<%= locals.account_id %>">
+
+        <button type="submit">Change Password</button>
+        <a class="cancel-button management-link" href="/account/">Cancel</a>
+    </form>
+</div>
