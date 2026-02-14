@@ -60,6 +60,26 @@ accountCont.buildManagement = async function (req, res, next) {
 }
 
 /* ****************************************
+*  Build update account view
+* *************************************** */
+accountCont.buildUpdate = async function (req, res, next) {
+  let nav = await utilities.getNav()
+  const account_id = req.params.accountId
+
+  const data = await accountModel.getAccountById(account_id)
+
+  res.render("account/update", {
+    title: "Update Account",
+    nav,
+    errors: null,
+    account_firstname: data.account_firstname,
+    account_lastname: data.account_lastname,
+    account_email: data.account_email,
+    account_id: data.account_id,
+  })
+}
+
+/* ****************************************
 *  Process Registration
 * *************************************** */
 accountCont.registerAccount = async function (req, res) {
@@ -144,6 +164,82 @@ accountCont.accountLogin = async function (req, res) {
     }
   } catch (error) {
     throw new Error('Access Forbidden')
+  }
+}
+
+/* ****************************************
+*  Process Update Info
+* *************************************** */
+accountCont.updateInfo = async function (req, res) {
+  let nav = await utilities.getNav()
+  const { account_firstname, account_lastname, account_email, account_id } = req.body
+
+  const updResult = await accountModel.updateInfo(
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_id
+  )
+
+  if (updResult) {
+    req.flash(
+      "notice",
+      `Congratulations, you\'ve updated ${account_firstname} account information successfully`
+    )
+    res.status(201).render("account/management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("account/update", {
+      title: "Update Account",
+      nav,
+    })
+  }
+}
+
+/* ****************************************
+*  Process Password Update
+* *************************************** */
+accountCont.passwordUpdate = async function (req, res) {
+  let nav = await utilities.getNav()
+  const { account_password, account_id } = req.body
+  // Hash the password before storing
+  let hashedPassword
+  try {
+    // regular password and cost (salt is generated automatically)
+    hashedPassword = await bcrypt.hashSync(account_password, 10)
+  } catch (error) {
+    req.flash("notice", 'Sorry, there was an error processing the registration.')
+    res.status(500).render("account/update", {
+      title: "Update Account",
+      nav,
+      errors: null,
+    })
+  }
+  const updResult = await accountModel.updatePassword(
+    account_id,
+    hashedPassword
+  )
+
+  if (updResult) {
+    req.flash(
+      "notice",
+      `Congratulations, you\'ve updated your password successfully`
+    )
+    res.status(201).render("account/management", {
+      title: "Account Management",
+      nav,
+      errors: null,
+    })
+  } else {
+    req.flash("notice", "Sorry, the update failed.")
+    res.status(501).render("account/update", {
+      title: "Update Account",
+      nav,
+    })
   }
 }
 
