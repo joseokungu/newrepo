@@ -6,7 +6,7 @@ const utilities = require("../utilities")
 const invValidate = require('../utilities/inventory-validation')
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", invController.buildByClassificationId);
+router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
 // Route to build details by details view
 router.get("/detail/:invId", utilities.handleErrors(invController.buildByInventoryId));
@@ -17,23 +17,24 @@ router.get("/", utilities.handleErrors(invController.buildManagement));
 //-- JUST FOR THE ADMINS OR EMPLOYEES --//
 
 // Route to build the add-classification view
-router.get("/add-classification", utilities.handleErrors(invController.buildAddClassification));
+router.get("/add-classification", utilities.checkEmployeeOrAdmin, utilities.handleErrors(invController.buildAddClassification));
 
 // Route to build the add-inventory view
-router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
+router.get("/add-inventory",utilities.checkEmployeeOrAdmin, utilities.handleErrors(invController.buildAddInventory));
 
 // Route to get the inventory classification for the table on management view
-router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
-
-// Route to build the delete inventory view 
-router.get("/delete/:invId", utilities.handleErrors(invController.buildDeleteInventoryById));
+router.get("/getInventory/:classification_id", utilities.checkEmployeeOrAdmin, utilities.handleErrors(invController.getInventoryJSON))
 
 // Route to build the edit inventory view 
-router.get("/edit/:invId", utilities.handleErrors(invController.buildEditInventoryById));
+router.get("/edit/:invId", utilities.checkEmployeeOrAdmin, utilities.handleErrors(invController.buildEditInventoryById));
+
+// Route to build the delete inventory view 
+router.get("/delete/:invId", utilities.checkEmployeeOrAdmin, utilities.handleErrors(invController.buildDeleteInventoryById));
 
 // Process the add-classification data
 router.post(
     "/add-classification",
+    utilities.checkEmployeeOrAdmin,
     invValidate.classificationRules(),
     invValidate.checkClassificationData,
     utilities.handleErrors(invController.AddClassificationName)
@@ -42,19 +43,24 @@ router.post(
 // Process the add-inventory data
 router.post(
     "/add-inventory",
+    utilities.checkEmployeeOrAdmin,
     invValidate.inventoryRules(),
+    invValidate.checkInventoryData,
     utilities.handleErrors(invController.AddInventory)
 )
 
 // Process the edit-inventory data
 router.post(
     "/edit-inventory",
+    utilities.checkEmployeeOrAdmin,
+    invValidate.inventoryRules(),
     invValidate.checkUpdateData,
     utilities.handleErrors(invController.updateInventory))
 
 // Process the edit-inventory data
 router.post(
     "/delete-confirm",
+    utilities.checkEmployeeOrAdmin,
     utilities.handleErrors(invController.deleteInventory))
 
 module.exports = router;
