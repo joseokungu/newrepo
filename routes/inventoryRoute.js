@@ -22,6 +22,9 @@ router.get("/add-classification", utilities.handleErrors(invController.buildAddC
 // Route to build the add-inventory view
 router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
 
+// Route to get the inventory classification for the table on management view
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
 // Process the add-classification data
 router.post(
     "/add-classification",
