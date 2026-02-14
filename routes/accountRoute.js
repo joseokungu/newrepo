@@ -24,6 +24,11 @@ router.get("/login", utilities.handleErrors(controller.buildLogin));
  *************************/
 router.get("/register", utilities.handleErrors(controller.buildRegister));
 
+/* ***********************
+ * Deliver update view
+ *************************/
+router.get("/update/:accountId", utilities.handleErrors(controller.buildUpdate))
+
 // router.post('/register', utilities.handleErrors(controller.registerAccount))
 
 // Process the registration data
@@ -44,10 +49,24 @@ router.post(
 
 router.post(
     "/login",
+    regValidate.loginRules(),
+    regValidate.checkLoginData,
     utilities.handleErrors(controller.accountLogin)
 )
 
+router.post(
+    "/update",
+    regValidate.updateInfoRules(),
+    regValidate.checkUpdInfoData,
+    utilities.handleErrors(controller.updateInfo)
+)
 
+router.post(
+    "/update-password",
+    regValidate.passwordUpdateRules(),
+    regValidate.checkUpdtPasswordData,
+    utilities.handleErrors(controller.passwordUpdate)
+)
 
 router.get("/logout", (req, res) => {
     res.clearCookie("jwt");
