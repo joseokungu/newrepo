@@ -1,8 +1,16 @@
-<%# Assignment 3, Basic Error Handing activicty %>
+<!-- Content Heading -->
+
 <% if (title) { %>
-<h1><%= title %></h1>
-<% } else {
-    res.redirect('/')
-} %>
+    <h1>
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+
+<!-- Message Block -->
 
 <%- message %>
+
+<!-- 404 Image Display -->
+
+<!-- <img src="<%# image %>" alt="404 Error image"> -->
+<img class="not-found" src="/images/site/error_small.png" alt="Error image">
