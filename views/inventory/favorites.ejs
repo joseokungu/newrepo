@@ -1,0 +1,23 @@
+<!-- Content Heading -->
+
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+<% } else { res.redirect('/') } %>
+
+<!-- Flash Message Section -->
+<%- messages() %>
+
+<% if (errors) { %>
+    <ul class="notice">
+        <% errors.array().forEach(error=> { %>
+            <li>
+                <%= error.msg %>
+            </li>
+        <% }) %>
+    </ul>
+<% } %>
+
+<!-- Content -->
+<table id="favorites-table"><%- grid %></table>
